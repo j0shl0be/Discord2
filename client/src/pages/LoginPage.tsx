@@ -196,12 +196,12 @@ function LoginPage() {
 				<HeaderContainer>
 					{AUTH_NO_BRANDING ? (
 						<>
-							<Header>Login to HomeServer</Header>
+							<Header>Login to Spacebar</Header>
 						</>
 					) : (
 						<>
 							<SpacebarLogoBlue height={48} width="auto" />
-							<SubHeader noBranding>Log into HomeServer</SubHeader>
+							<SubHeader noBranding>Log into Spacebar</SubHeader>
 						</>
 					)}
 				</HeaderContainer>
@@ -299,7 +299,7 @@ function LoginPage() {
 					</SubmitButton>
 
 					<AuthSwitchPageContainer>
-						<AuthSwitchPageLabel>New to HomeServer?&nbsp;</AuthSwitchPageLabel>
+						<AuthSwitchPageLabel>New to Spacebar?&nbsp;</AuthSwitchPageLabel>
 						<AuthSwitchPageLink
 							onClick={() => {
 								navigate("/register");

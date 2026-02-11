@@ -1,6 +1,5 @@
 /*
-	Custom admin routes for single-guild Discord alternative.
-	Requires OPERATOR right OR MANAGE_GUILD/ADMINISTRATOR in primary guild.
+	Custom admin routes - instance settings (read-only subset).
 */
 
 import { route } from "@spacebar/api";
@@ -42,17 +41,25 @@ router.get(
 		},
 	}),
 	requireAdmin,
-	async (req: Request, res: Response) => {
+	async (_req: Request, res: Response) => {
 		const config = Config.get();
-		const primaryGuilds = config.guild?.autoJoin?.guilds ?? [];
-		const guildId = primaryGuilds[0];
-
 		return res.json({
-			primaryGuildId: guildId ?? null,
 			register: {
 				requireInvite: config.register?.requireInvite ?? false,
 				allowNewRegistration: config.register?.allowNewRegistration ?? true,
 				disabled: config.register?.disabled ?? false,
+			},
+			guild: {
+				autoJoin: config.guild?.autoJoin
+					? {
+							enabled: config.guild.autoJoin.enabled,
+							guilds: config.guild.autoJoin.guilds,
+							canLeave: config.guild.autoJoin.canLeave,
+						}
+					: null,
+			},
+			limits: {
+				user: config.limits?.user ? { maxGuilds: config.limits.user.maxGuilds } : null,
 			},
 		});
 	}

@@ -1,33 +1,47 @@
-## Mobile app plan (iOS first, then Android)
+# Mobile app (iOS / Android)
 
-Mobile clients will be built **later** and will talk to the same HTTP, WebSocket,
-and voice endpoints as the web client and desktop app.
+Future React Native app that uses the same Spacebar REST/WebSocket/Voice APIs as the web client.
 
-### Tech choice
+## Architecture plan
 
-- Use **React Native** with:
-  - `react-native-webrtc` for voice.
-  - A WebSocket client for the gateway connection.
-  - Shared TypeScript interfaces (DTOs) for API payloads, shared with the
-    backend and web client via a small common package.
+- **Stack**: React Native with TypeScript
+- **Auth**: Same JWT flow as web (login, register with invite code)
+- **API**: REST client pointing at your Spacebar server (`/api/v9`)
+- **Realtime**: WebSocket to gateway for messages, typing, presence
+- **Voice**: `react-native-webrtc` for voice channels (same signaling as web)
 
-### Initial scope
+## Shared types
 
-The first mobile release should support:
+Consider a `shared/` or `packages/types` package with TypeScript interfaces for:
+- API request/response shapes
+- WebSocket event payloads
+- Voice signaling messages
 
-- Login / logout.
-- Listing text channels and DMs.
-- Sending and receiving messages in text channels and DMs.
-- Joining and leaving voice channels with basic mute/deafen controls.
+This keeps backend, web client, and mobile in sync.
 
-### Project layout
+## iOS App Store
 
-When implemented, this folder will contain:
+1. **Apple Developer account**: ~$99/year (or university fee waiver if available)
+2. **Bundle ID**: e.g. `com.yourname.homeserverchat`
+3. **App Store Connect**: Create app, metadata, screenshots, privacy policy
+4. **TestFlight**: Internal/external testing before release
+5. **App Review**: Submit with clear description of the app
 
-- `mobile/app/` – React Native application source.
-- `mobile/ios/`, `mobile/android/` – native platform projects managed by React Native.
-- Shared configuration for pointing at your production Spacebar backend instance.
+See the main plan in `../.cursor/plans/` for full iOS submission details.
 
-This document defines the agreed direction so the backend and APIs remain
-compatible with the future mobile clients.
+## Getting started (when ready)
 
+```bash
+npx react-native init HomeServerChat --template react-native-template-typescript
+cd HomeServerChat
+npm install react-native-webrtc
+# Configure API/base URLs, add screens for login, channels, chat, DMs
+```
+
+Then implement:
+1. Login/register flow (with invite code)
+2. Guild/channel list
+3. Message list and composer
+4. DM list and DM chat
+5. Voice channel join/leave (WebRTC)
+6. Push notifications (optional; requires backend support)

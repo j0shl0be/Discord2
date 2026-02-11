@@ -180,12 +180,12 @@ function RegistrationPage() {
 			<AuthContainer>
 				{AUTH_NO_BRANDING ? (
 					<>
-						<Header>Create a HomeServer account</Header>
+						<Header>Create an account</Header>
 					</>
 				) : (
 					<>
 						<SpacebarLogoBlue height={48} width="auto" />
-						<SubHeader noBranding>Create a HomeServer account</SubHeader>
+						<SubHeader noBranding>Create an account</SubHeader>
 					</>
 				)}
 

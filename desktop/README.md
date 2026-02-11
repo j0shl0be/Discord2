@@ -1,26 +1,37 @@
-## Windows desktop app plan
+# Desktop app (Electron)
 
-This repository will use the existing web client in `client/` as the UI for a
-Windows desktop application.
+A minimal Electron wrapper that loads the web client in a native window.
 
-### Approach
+## Setup
 
-- Use **Electron** to host the web client in a native window.
-- The Electron app will:
-  - Load the production build of the web client (or point to the running dev server during development).
-  - Integrate with the system tray and window menus if desired.
-  - Re-use the same authentication, REST, and WebSocket endpoints as the browser.
+1. Install dependencies:
+   ```bash
+   cd desktop && npm install
+   ```
 
-### Minimal Electron skeleton (to be implemented later)
+2. Start your web client (from `client/`):
+   ```bash
+   cd ../client && npm run dev
+   ```
 
-The future implementation will consist of:
+3. Run the desktop app:
+   ```bash
+   cd ../desktop && npm start
+   ```
 
-- `desktop/package.json` – Electron dependencies and scripts.
-- `desktop/main.ts` – Electron main process that:
-  - Creates a `BrowserWindow`.
-  - Loads `http://localhost:5173` in development, or `file://.../index.html` from the built `client/` in production.
-- `desktop/preload.ts` – optional preload script for limited native integrations.
+The desktop app loads `http://localhost:5173` by default. Set `CLIENT_URL` to point at your deployed client if needed.
 
-No Electron code is added yet; this document records the agreed plan and folder
-for future work.
+## Building for Windows
 
+```bash
+npm run build:win
+```
+
+Output will be in `desktop/dist/`. Add an `icon.ico` for the app icon.
+
+## Future improvements
+
+- Tray icon and minimize to tray
+- Auto-updater (electron-updater)
+- Custom app menu
+- Deep links (e.g. `homeserver://` for OAuth)

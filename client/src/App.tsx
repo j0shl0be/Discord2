@@ -10,12 +10,12 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import Loader from "./components/Loader";
 import useLogger from "./hooks/useLogger";
 import AppPage from "./pages/AppPage";
+import AdminPage from "./pages/AdminPage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
 import NotFoundPage from "./pages/NotFound";
 import RegistrationPage from "./pages/RegistrationPage";
 import ChannelPage from "./pages/subpages/ChannelPage";
-import AdminPage from "./pages/AdminPage";
 import { Globals } from "./utils/Globals";
 // @ts-expect-error no types
 import FPSStats from "react-fps-stats";
@@ -100,7 +100,6 @@ function App() {
 				<Routes>
 					<Route index path="/" element={<AuthenticationGuard component={AppPage} />} />
 					<Route path="/app" element={<AuthenticationGuard component={AppPage} />} />
-					<Route path="/admin" element={<AuthenticationGuard component={AdminPage} />} />
 					<Route
 						path="/channels/:guildId/:channelId?"
 						element={<AuthenticationGuard component={ChannelPage} />}
@@ -114,6 +113,7 @@ function App() {
 						element={<AuthenticationGuard requireUnauthenticated component={RegistrationPage} />}
 					/>
 					<Route path="/logout" element={<AuthenticationGuard component={LogoutPage} />} />
+					<Route path="/admin/:section?" element={<AuthenticationGuard component={AdminPage} />} />
 					<Route path="/invite/:code" element={<InvitePage />} />
 					<Route path="*" element={<NotFoundPage />} />
 				</Routes>

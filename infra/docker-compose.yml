@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: homeserver-db
+    environment:
+      POSTGRES_DB: spacebar
+      POSTGRES_USER: spacebar
+      POSTGRES_PASSWORD: spacebar
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  server:
+    build:
+      context: ..
+      dockerfile: infra/server.Dockerfile
+    container_name: homeserver-api
+    depends_on:
+      - db
+    environment:
+      # Spacebar server DB connection string
+      DATABASE: postgres://spacebar:spacebar@db:5432/spacebar
+      # API port inside the container (matches defaults and config file)
+      PORT: 3001
+      # Use the JSON config we mount below for endpoints, invite-only, auto-join, etc.
+      CONFIG_PATH: /app/config.invite-single-guild.json
+    volumes:
+      # Mount your instance config into the container so you can edit it without rebuilding
+      - ../server/config.invite-single-guild.json:/app/config.invite-single-guild.json:ro
+    ports:
+      # API
+      - "3001:3001"
+      # Gateway (WebSocket)
+      - "3002:3002"
+      # CDN (attachments/media)
+      - "3003:3003"
+
+volumes:
+  db-data:
+

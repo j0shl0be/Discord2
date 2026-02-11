@@ -40,70 +40,53 @@ function GuildSidebar() {
 
 	const navigate = useNavigate();
 	const { all } = app.guilds;
-	const itemCount = all.length + 4; // home button, divider, add server button, admin button
+	const itemCount = all.length + 4; // home, divider, guilds, admin, add server
+	const adminIndex = itemCount - 2;
+	const addServerIndex = itemCount - 1;
 
 	const rowRenderer = ({ index, key, style }: ListRowProps) => {
 		let element: React.ReactNode;
 		if (index === 0) {
-			// home button
 			element = (
 				<SidebarAction
 					key="home"
 					tooltip="Home"
-					icon={{
-						icon: "mdiHome",
-						size: "24px",
-					}}
+					icon={{ icon: "mdiHome", size: "24px" }}
 					action={() => navigate("/channels/@me")}
 					margin={false}
 					active={app.activeGuildId === "@me"}
 				/>
 			);
 		} else if (index === 1) {
-			// divider
 			element = (
 				<GuildSidebarListItem>
 					<Divider key="divider" />
 				</GuildSidebarListItem>
 			);
-		} else if (index === itemCount - 2) {
-			// add server button/any other end items
+		} else if (index === adminIndex) {
+			element = (
+				<SidebarAction
+					key="admin"
+					tooltip="Admin Panel"
+					icon={{ icon: "mdiCog", size: "24px" }}
+					action={() => navigate("/admin/dashboard")}
+					margin={false}
+					active={window.location.pathname.startsWith("/admin")}
+				/>
+			);
+		} else if (index === addServerIndex) {
 			element = (
 				<SidebarAction
 					key="add-server"
 					tooltip="Add Server"
-					icon={{
-						icon: "mdiPlus",
-						size: "24px",
-						color: "var(--success)",
-					}}
-					action={() => {
-						modalController.push({
-							type: "add_server",
-						});
-					}}
+					icon={{ icon: "mdiPlus", size: "24px", color: "var(--success)" }}
+					action={() => modalController.push({ type: "add_server" })}
 					margin={false}
 					disablePill
 					useGreenColorScheme
 				/>
 			);
-		} else if (index === itemCount - 1) {
-			// admin button (always visible; backend still enforces permissions)
-			element = (
-				<SidebarAction
-					key="admin"
-					tooltip="Admin"
-					icon={{
-						icon: "mdiShieldAccount",
-						size: "24px",
-					}}
-					action={() => navigate("/admin")}
-					margin={false}
-					active={false}
-				/>
-			);
 		} else {
-			// regular guild item
 			const guild = all[index - 2];
 			element = <GuildItem key={key} guild={guild} />;
 		}
