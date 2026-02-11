@@ -1,6 +1,4 @@
-# Home Server – Discord Alternative
-
-Self-hosted, private chat for you and your friends. Built on [Spacebar](https://spacebar.chat) with single-guild, invite-only registration, and an in-app admin panel.
+Discord sold out to palantir and im not all about that. Built on [Spacebar](https://spacebar.chat) with single-guild, invite-only registration, and an in-app admin panel.
 
 ## Features
 
