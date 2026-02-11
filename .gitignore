@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+config.json
+jwt.key*
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Logs and temp
+*.log
+tmp/
+temp/
+
+# IDE and OS
+.DS_Store
+.idea/
+.vscode/settings.json

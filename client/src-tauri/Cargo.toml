@@ -1,0 +1,41 @@
+[package]
+name = "app"
+version = "0.0.0"
+description = "Spacebar Client"
+authors = ["Puyodead1"]
+license = "AGPL-3.0-only"
+repository = "https://github.com/spacebarchat/client"
+edition = "2021"
+
+[lib]
+name = "spacebar"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "2.0.4", features = [] }
+
+[dependencies]
+tauri = { version = "2.1.1", features = ["devtools", "tray-icon"] }
+tauri-plugin-updater = "2.8.1"
+tauri-plugin-process = "2.2.0"
+tauri-plugin-log = "2.5.1"
+tauri-plugin-os = "2.2.1"
+tauri-plugin-notification = "2.2.2"
+tauri-plugin-single-instance = "2.2.0"
+tauri-plugin-autostart = "2.2.0"
+reqwest = { version = "0.12.23", default-features = false, features = [
+	"json",
+	"rustls-tls",
+] }
+url = "2.5.4"
+chrono = "0.4"
+log = "0.4.22"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]

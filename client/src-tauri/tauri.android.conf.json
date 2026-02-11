@@ -1,0 +1,13 @@
+{
+	"app": {
+		"windows": [
+			{
+				"fullscreen": false,
+				"resizable": true,
+				"title": "Spacebar",
+				"maximized": true,
+				"label": "main"
+			}
+		]
+	}
+}
